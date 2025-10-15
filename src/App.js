@@ -24,6 +24,9 @@ class App {
     // 빈무자열일 경우는
     if (trimmedInput.length === 0) {
       result = 0;
+      // 결과를 출력하는 메서드
+      App.print(result);
+      return;
     } else {
       // 기본 구분자 혹은 커스텀 구분자 사용안하면은 에러
       if (!isBasic && !isCustom) {
@@ -50,7 +53,10 @@ class App {
         const replacedTrimmedInput = trimmedInput.replace(matchedStr, "");
 
         // 구분자와 일치하는 문자열로 입력
-        if (!replacedTrimmedInput.includes(matchedSeperator)) {
+        if (
+          replacedTrimmedInput.length > 1 &&
+          !replacedTrimmedInput.includes(matchedSeperator)
+        ) {
           throw new Error(
             "[ERROR] 구분자와 일치하는 문자열로 입력해야 합니다."
           );
@@ -60,13 +66,19 @@ class App {
           .split(matchedSeperator)
           .map((item) => Number(item));
 
-        console.log("arr ===>", arr);
-
         arr.forEach((num) => {
-          if (num < 0) {
-            throw new Error("[ERROR] 음수는 입력할 수 없습니다");
+          if (isNaN(num)) {
+            throw new Error(
+              "[ERROR] 올바르지 않은 숫자 문자열을 입력하였습니다."
+            );
           }
+          if (num < 0) {
+            throw new Error("[ERROR] 음수는 s입력할 수 없습니다");
+          }
+          result += num;
         });
+        // 결과를 출력하는 메서드
+        App.print(result);
         return;
       }
 
@@ -87,10 +99,11 @@ class App {
           }
           result += num;
         });
+        // 결과를 출력하는 메서드
+        App.print(result);
+        return;
       }
     }
-    // 결과를 출력하는 메서드
-    App.print(result);
   }
 }
 
