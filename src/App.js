@@ -58,7 +58,7 @@ class App {
 
       arr.forEach((num) => {
         if (num < 0) {
-          throw new Error("[ERROR] 음수는 사용하지 못합니다.");
+          throw new Error("[ERROR] 음수는 입력할 수 없습니다");
         }
       });
       return;
@@ -77,7 +77,7 @@ class App {
           );
         }
         if (num < 0) {
-          throw new Error("[ERROR] 음수는 사용하지 못합니다.");
+          throw new Error("[ERROR] 음수는 입력할 수 없습니다");
         }
       });
     }
