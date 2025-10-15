@@ -1,7 +1,12 @@
 import { Console } from "@woowacourse/mission-utils";
 
 class App {
+  static print(result) {
+    Console.print(`결과 : ${result}`);
+  }
+
   async run() {
+    let result = 0;
     const input = await Console.readLineAsync(
       "덧셈할 문자열을 입력해 주세요.\n"
     );
@@ -18,69 +23,74 @@ class App {
 
     // 빈무자열일 경우는
     if (trimmedInput.length === 0) {
-      return;
-    }
-
-    // 아래 로직들은 최소 1글자 이상일경우 해당된다.
-
-    // 기본 구분자 혹은 커스텀 구분자 사용안하면은 에러
-    if (!isBasic && !isCustom) {
-      throw new Error(
-        "[ERROR] 기본 구분자 혹은 커스텀 구분자를 사용해야 합니다."
-      );
-    }
-
-    // 먼저 커스텀 구분자가 있는지 확인
-    if (isCustom) {
-      const matchedStr = trimmedInput.match(CUSTOM_SEPARATOR)[0];
-      const matchedSeperator = trimmedInput.match(CUSTOM_SEPARATOR)[1];
-
-      // 구분자가 최소 한글자 이상이어야 한다.
-      if (matchedSeperator.length < 1) {
-        throw new Error("[ERROR] 구분자는 최소 1글자 이상이어야 합니다.");
+      result = 0;
+    } else {
+      // 기본 구분자 혹은 커스텀 구분자 사용안하면은 에러
+      if (!isBasic && !isCustom) {
+        throw new Error(
+          "[ERROR] 기본 구분자 혹은 커스텀 구분자를 사용해야 합니다."
+        );
       }
 
-      // 구분자는 가장 먼저 사용해야 한다.
-      if (trimmedInput.indexOf(matchedStr) !== 0) {
-        throw new Error("[ERROR] 구분자를 우선적으로 사용해야 합니다.");
-      }
+      // 먼저 커스텀 구분자가 있는지 확인
+      if (isCustom) {
+        const matchedStr = trimmedInput.match(CUSTOM_SEPARATOR)[0];
+        const matchedSeperator = trimmedInput.match(CUSTOM_SEPARATOR)[1];
 
-      const replacedTrimmedInput = trimmedInput.replace(matchedStr, "");
-
-      // 구분자와 일치하는 문자열로 입력
-      if (!replacedTrimmedInput.includes(matchedSeperator)) {
-        throw new Error("[ERROR] 구분자와 일치하는 문자열로 입력해야 합니다.");
-      }
-
-      const arr = replacedTrimmedInput
-        .split(matchedSeperator)
-        .map((item) => Number(item));
-
-      arr.forEach((num) => {
-        if (num < 0) {
-          throw new Error("[ERROR] 음수는 입력할 수 없습니다");
+        // 구분자가 최소 한글자 이상이어야 한다.
+        if (matchedSeperator.length < 1) {
+          throw new Error("[ERROR] 구분자는 최소 1글자 이상이어야 합니다.");
         }
-      });
-      return;
-    }
 
-    // 기본 구분자가 있는지 확인
-    if (isBasic) {
-      const arr = trimmedInput
-        .split(BASIC_SEPERATOR)
-        .map((item) => Number(item));
+        // 구분자는 가장 먼저 사용해야 한다.
+        if (trimmedInput.indexOf(matchedStr) !== 0) {
+          throw new Error("[ERROR] 구분자를 우선적으로 사용해야 합니다.");
+        }
 
-      arr.forEach((num) => {
-        if (isNaN(num)) {
+        const replacedTrimmedInput = trimmedInput.replace(matchedStr, "");
+
+        // 구분자와 일치하는 문자열로 입력
+        if (!replacedTrimmedInput.includes(matchedSeperator)) {
           throw new Error(
-            "[ERROR] 올바르지 않은 숫자 문자열을 입력하였습니다."
+            "[ERROR] 구분자와 일치하는 문자열로 입력해야 합니다."
           );
         }
-        if (num < 0) {
-          throw new Error("[ERROR] 음수는 입력할 수 없습니다");
-        }
-      });
+
+        const arr = replacedTrimmedInput
+          .split(matchedSeperator)
+          .map((item) => Number(item));
+
+        console.log("arr ===>", arr);
+
+        arr.forEach((num) => {
+          if (num < 0) {
+            throw new Error("[ERROR] 음수는 입력할 수 없습니다");
+          }
+        });
+        return;
+      }
+
+      // 기본 구분자가 있는지 확인
+      if (isBasic) {
+        const arr = trimmedInput
+          .split(BASIC_SEPERATOR)
+          .map((item) => Number(item));
+
+        arr.forEach((num) => {
+          if (isNaN(num)) {
+            throw new Error(
+              "[ERROR] 올바르지 않은 숫자 문자열을 입력하였습니다."
+            );
+          }
+          if (num < 0) {
+            throw new Error("[ERROR] 음수는 입력할 수 없습니다");
+          }
+          result += num;
+        });
+      }
     }
+    // 결과를 출력하는 메서드
+    App.print(result);
   }
 }
 
