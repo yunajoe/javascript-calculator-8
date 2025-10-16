@@ -3,7 +3,6 @@ import App from "../src/App.js";
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
-
   MissionUtils.Console.readLineAsync.mockImplementation(() => {
     const input = inputs.shift();
     return Promise.resolve(input);
@@ -63,7 +62,6 @@ describe("문자열 계산기", () => {
       });
     });
   });
-  describe("입력 처리 테스트", () => {});
   describe("입력 예외 처리 테스트", () => {
     test.each(["123"])("구분자가 없는 경우", async (input) => {
       mockQuestions([input]);
