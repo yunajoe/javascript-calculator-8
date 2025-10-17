@@ -1,10 +1,11 @@
-import Controller from "./controller.js";
-import View from "./view.js";
+import Controller from "./controller/index.js";
+import View from "./View/index.js";
 
 class App {
   async run() {
     const userInput = await View.getUserInput();
-    Controller.run(userInput);
+    const output = Controller.run(userInput);
+    View.printResult(output);
   }
 }
 

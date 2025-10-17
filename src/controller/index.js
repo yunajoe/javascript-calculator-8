@@ -1,5 +1,4 @@
-import Model from "./model.js";
-import View from "./view.js";
+import Model from "../Model/index.js";
 
 class Controller {
   static isEmptyString(input) {
@@ -10,10 +9,9 @@ class Controller {
     const trimmedInput = input.trim();
     const isEmptyString = this.isEmptyString(trimmedInput);
     if (isEmptyString) {
-      View.printResult(0);
-    } else {
-      Model.checkValidInput(trimmedInput);
+      return 0;
     }
+    return Model.run(trimmedInput);
   }
 }
 
