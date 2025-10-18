@@ -8,6 +8,7 @@ class Model {
 
   static run(input) {
     const { isCustom } = Validate.checkValidInput(input);
+
     if (isCustom) {
       const { replacedInput, matchedSeperator } =
         Validate.customSeperator(input);

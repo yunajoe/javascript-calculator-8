@@ -26,7 +26,6 @@ class Validate {
   static checkValidInput(input) {
     const isBasic = BASIC_SEPERATOR.test(input);
     const isCustom = CUSTOM_SEPARATOR.test(input);
-
     if (!isBasic && !isCustom) {
       throw new Error(ERROR_MESSAGES.NOT_USED_SEPERATOR);
     }

@@ -21,20 +21,33 @@ describe("문자열 계산기", () => {
     app = new App();
   });
   describe("입력/출력 통합 테스트", () => {
+    let logSpy;
+    beforeEach(() => {
+      logSpy = getLogSpy();
+    });
     test("빈 문자열 입력", async () => {
-      const inputs = ["", "  "];
+      const inputs = ["", "  ", "\n"];
       mockQuestions(inputs);
-      const logSpy = getLogSpy();
       const outputs = ["결과 : 0"];
       await app.run();
       outputs.forEach((output) => {
         expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
       });
     });
+    test.each([
+      ["0", "결과 : 0"],
+      ["1", "결과 : 1"],
+      ["100", "결과 : 100"],
+      ["12345", "결과 : 12345"],
+    ])("숫자 문자열만 있는 경우", async (input, output) => {
+      mockQuestions([input]);
+      await app.run();
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+
     test("기본 구분자 입력", async () => {
       const inputs = ["1,2,3", "1:2:3"];
       mockQuestions(inputs);
-      const logSpy = getLogSpy();
       const outputs = ["결과 : 6"];
       await app.run();
       outputs.forEach((output) => {
@@ -44,7 +57,7 @@ describe("문자열 계산기", () => {
     test("커스텀 구분자 입력(두개이상의 숫자 문자열만 있는경우)", async () => {
       const inputs = ["//;\\n1;2;3", "//:\\n1:2:3"];
       mockQuestions(inputs);
-      const logSpy = getLogSpy();
+
       const outputs = ["결과 : 6"];
       await app.run();
       outputs.forEach((output) => {
@@ -54,7 +67,6 @@ describe("문자열 계산기", () => {
     test("커스텀 구분자 입력(하나의 숫자 문자열만 있는경우)", async () => {
       const inputs = ["//;\\n1", "//:\\n1"];
       mockQuestions(inputs);
-      const logSpy = getLogSpy();
       const outputs = ["결과 : 1"];
       await app.run();
       outputs.forEach((output) => {
@@ -63,13 +75,6 @@ describe("문자열 계산기", () => {
     });
   });
   describe("입력 예외 처리 테스트", () => {
-    test.each(["123"])("구분자가 없는 경우", async (input) => {
-      mockQuestions([input]);
-      await expect(app.run()).rejects.toThrow(
-        "[ERROR] 기본 구분자 혹은 커스텀 구분자를 사용해야 합니다."
-      );
-    });
-
     test.each(["1@2@3", "1?2?3", "12#3", "@@@"])(
       "구분자를 제대로 사용하지 않은 경우",
       async (input) => {
