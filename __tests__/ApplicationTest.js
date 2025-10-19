@@ -67,7 +67,7 @@ describe("문자열 계산기", () => {
     test.each(["123", "0"])("숫자 문자열만 있는 경우", async (input) => {
       mockQuestions([input]);
       await expect(app.run()).rejects.toThrow(
-        "[ERROR] 기본 구분자 혹은 커스텀 구분자를 사용해야 합니다."
+        "[ERROR] 유효한 구분자와 숫자 문자열을 함께 입력해야합니다."
       );
     });
 
@@ -76,7 +76,7 @@ describe("문자열 계산기", () => {
       async (input) => {
         mockQuestions([input]);
         await expect(app.run()).rejects.toThrow(
-          "[ERROR] 기본 구분자 혹은 커스텀 구분자를 사용해야 합니다."
+          "[ERROR] 유효한 구분자와 숫자 문자열을 함께 입력해야합니다."
         );
       }
     );

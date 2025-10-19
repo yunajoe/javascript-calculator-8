@@ -5,18 +5,29 @@ import {
 } from "../constant.js";
 
 class Validate {
-  static customSeperator(input) {
-    const matchedStr = input.match(CUSTOM_SEPARATOR)[0];
-    const matchedSeperator = input.match(CUSTOM_SEPARATOR)[1];
-
-    if (matchedSeperator.length < 1) {
-      throw new Error(ERROR_MESSAGES.SEPERATOR_MINIMUM_LENGTH);
-    }
-
-    if (input.indexOf(matchedStr) !== 0) {
+  static validateSeparatorPosition(input, seperator) {
+    if (!input.startsWith(seperator)) {
       throw new Error(ERROR_MESSAGES.NOT_USED_SEPERATOR_IN_FIRST);
     }
+  }
+
+  static validateSeperatorLength(separator) {
+    if (separator.length < 1) {
+      throw new Error(ERROR_MESSAGES.SEPERATOR_MINIMUM_LENGTH);
+    }
+  }
+
+  static customSeperator(input) {
+    const match = input.match(CUSTOM_SEPARATOR);
+    const [matchedStr, matchedSeperator] = match;
+
+    Validate.validateSeperatorLength(matchedSeperator);
+    Validate.validateSeparatorPosition(input, matchedStr);
+
     const replacedInput = input.replace(matchedStr, "");
+
+    if (replacedInput.length === 0)
+      throw new Error(ERROR_MESSAGES.INVALID_INPUT);
 
     if (Number(replacedInput)) {
       return { replacedInput, matchedSeperator };
@@ -33,7 +44,7 @@ class Validate {
     const isBasic = BASIC_SEPERATOR.test(input);
     const isCustom = CUSTOM_SEPARATOR.test(input);
     if (!isBasic && !isCustom) {
-      throw new Error(ERROR_MESSAGES.NOT_USED_SEPERATOR);
+      throw new Error(ERROR_MESSAGES.INVALID_INPUT);
     }
     return { isBasic, isCustom };
   }
