@@ -17,8 +17,8 @@ class Calculate {
     return num;
   }
 
-  static calculateNumber(input, seperator) {
-    const numberArr = input.split(seperator).map(Calculate.validateNumber);
+  static calculateNumber(input, separator) {
+    const numberArr = input.split(separator).map(Calculate.validateNumber);
     return numberArr.reduce((acc, num) => {
       const newSum = acc + num;
       if (newSum > Number.MAX_SAFE_INTEGER) {

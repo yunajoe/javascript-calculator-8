@@ -5,8 +5,8 @@ import {
 } from "../constant.js";
 
 class Validate {
-  static validateSeparatorPosition(input, seperator) {
-    if (!input.startsWith(seperator)) {
+  static validateSeparatorPosition(input, separator) {
+    if (!input.startsWith(separator)) {
       throw new Error(ERROR_MESSAGES.NOT_USED_SEPARATOR_IN_FIRST);
     }
   }
@@ -40,7 +40,7 @@ class Validate {
     return { replacedInput, matchedSeparator };
   }
 
-  static checkSeperatorType(input) {
+  static checkSeparatorType(input) {
     const isBasic = BASIC_SEPARATOR.test(input);
     const isCustom = CUSTOM_SEPARATOR.test(input);
     if (!isBasic && !isCustom) {

@@ -7,7 +7,7 @@ class Model {
   static separator = "";
 
   static run(input) {
-    const { isCustom } = Validate.checkSeperatorType(input);
+    const { isCustom } = Validate.checkSeparatorType(input);
 
     if (isCustom) {
       const { replacedInput, matchedSeparator } =

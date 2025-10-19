@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from "../constant.js";
-import Model from "../Model/index.js";
+import Model from "../model/index.js";
 
 class Controller {
   static isEmptyString(input) {

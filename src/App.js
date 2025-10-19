@@ -1,5 +1,5 @@
 import Controller from "./controller/index.js";
-import View from "./View/index.js";
+import View from "./view/index.js";
 
 class App {
   async run() {

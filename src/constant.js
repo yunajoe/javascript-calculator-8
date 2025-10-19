@@ -1,7 +1,7 @@
-// basic seperator
+// basic separator
 export const BASIC_SEPARATOR = /[:|,]/;
 
-// custom seperator
+// custom separator
 export const CUSTOM_SEPARATOR = /\/\/(.*?)\\n/;
 
 // error message
