@@ -57,14 +57,14 @@ describe("문자열 계산기", () => {
     test.each([
       ["//;\\n1", "결과 : 1"],
       ["//:\\n123", "결과 : 123"],
-    ])("커스텀 구분자 입력 테스트", async (input, output) => {
+    ])("커스텀 구분자 입력 테스트: %s", async (input, output) => {
       mockQuestions([input]);
       await app.run();
       expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
     });
   });
   describe("입력 예외 처리 테스트", () => {
-    test.each(["123", "0"])("숫자 문자열만 있는 경우", async (input) => {
+    test.each(["123", "0"])("숫자 문자열만 있는 경우 %s", async (input) => {
       mockQuestions([input]);
       await expect(app.run()).rejects.toThrow(
         "[ERROR] 유효한 구분자와 숫자 문자열을 함께 입력해야합니다."
@@ -72,7 +72,7 @@ describe("문자열 계산기", () => {
     });
 
     test.each(["1@2@3", "1?2?3", "12#3", "@@@", "/;/1;2;3"])(
-      "구분자를 제대로 사용하지 않은 경우",
+      "구분자를 제대로 사용하지 않은 경우 %s",
       async (input) => {
         mockQuestions([input]);
         await expect(app.run()).rejects.toThrow(
@@ -82,7 +82,7 @@ describe("문자열 계산기", () => {
     );
 
     test.each(["3//;\\n1;2;3"])(
-      "구분자가 가장 먼저 나오지 않는 경우",
+      "구분자가 가장 먼저 나오지 않는 경우 %s",
       async (input) => {
         mockQuestions([input]);
         await expect(app.run()).rejects.toThrow(
@@ -92,7 +92,7 @@ describe("문자열 계산기", () => {
     );
 
     test.each(["0,1,2", "-1,2,3", "1,2,-3", "1,-2,3"])(
-      "숫자 문자열이 양수가 아닌게 포함되어 있을 경우",
+      "숫자 문자열이 양수가 아닌게 포함되어 있을 경우 %s",
       async (input) => {
         mockQuestions([input]);
         await expect(app.run()).rejects.toThrow(
@@ -101,7 +101,7 @@ describe("문자열 계산기", () => {
       }
     );
     test.each(["9007199254740990,1,2", "9007199254740990:1:2"])(
-      "숫자 문자열이 안전한 정수(9007199254740991)를 넘는 경우",
+      "숫자 문자열이 안전한 정수(9007199254740991)를 넘는 경우 %s",
       async (input) => {
         mockQuestions([input]);
         await expect(app.run()).rejects.toThrow(
@@ -111,7 +111,7 @@ describe("문자열 계산기", () => {
     );
 
     test.each(["1:2:A", "C:A:C", "C,A,C"])(
-      "숫자 문자열를 제대로 사용하지 않은 경우",
+      "숫자 문자열를 제대로 사용하지 않은 경우 %s",
       async (input) => {
         mockQuestions([input]);
         await expect(app.run()).rejects.toThrow(
@@ -121,7 +121,7 @@ describe("문자열 계산기", () => {
     );
 
     test.each(["//;\\n1:2:3", "//1:2:3//;\\n1;2;3"])(
-      "커스텀 구분자 사용시 다른 구분자로 문자열을 나눌떄",
+      "커스텀 구분자 사용시 다른 구분자로 문자열을 나눌떄 %s",
       async (input) => {
         mockQuestions([input]);
         await expect(app.run()).rejects.toThrow(
