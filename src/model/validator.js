@@ -1,5 +1,5 @@
 import {
-  BASIC_SEPERATOR,
+  BASIC_SEPARATOR,
   CUSTOM_SEPARATOR,
   ERROR_MESSAGES,
 } from "../constant.js";
@@ -7,21 +7,21 @@ import {
 class Validate {
   static validateSeparatorPosition(input, seperator) {
     if (!input.startsWith(seperator)) {
-      throw new Error(ERROR_MESSAGES.NOT_USED_SEPERATOR_IN_FIRST);
+      throw new Error(ERROR_MESSAGES.NOT_USED_SEPARATOR_IN_FIRST);
     }
   }
 
-  static validateSeperatorLength(separator) {
+  static validateSeparatorLength(separator) {
     if (separator.length < 1) {
-      throw new Error(ERROR_MESSAGES.SEPERATOR_MINIMUM_LENGTH);
+      throw new Error(ERROR_MESSAGES.SEPARATOR_MINIMUM_LENGTH);
     }
   }
 
-  static customSeperator(input) {
+  static customSeparator(input) {
     const match = input.match(CUSTOM_SEPARATOR);
-    const [matchedStr, matchedSeperator] = match;
+    const [matchedStr, matchedSeparator] = match;
 
-    Validate.validateSeperatorLength(matchedSeperator);
+    Validate.validateSeparatorLength(matchedSeparator);
     Validate.validateSeparatorPosition(input, matchedStr);
 
     const replacedInput = input.replace(matchedStr, "");
@@ -30,18 +30,18 @@ class Validate {
       throw new Error(ERROR_MESSAGES.INVALID_INPUT);
 
     if (Number(replacedInput)) {
-      return { replacedInput, matchedSeperator };
+      return { replacedInput, matchedSeparator };
     }
 
-    if (!replacedInput.includes(matchedSeperator)) {
-      throw new Error(ERROR_MESSAGES.NOT_MATCHED_SEPERATOR);
+    if (!replacedInput.includes(matchedSeparator)) {
+      throw new Error(ERROR_MESSAGES.NOT_MATCHED_SEPARATOR);
     }
 
-    return { replacedInput, matchedSeperator };
+    return { replacedInput, matchedSeparator };
   }
 
   static checkSeperatorType(input) {
-    const isBasic = BASIC_SEPERATOR.test(input);
+    const isBasic = BASIC_SEPARATOR.test(input);
     const isCustom = CUSTOM_SEPARATOR.test(input);
     if (!isBasic && !isCustom) {
       throw new Error(ERROR_MESSAGES.INVALID_INPUT);

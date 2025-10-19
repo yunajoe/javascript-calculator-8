@@ -1,24 +1,24 @@
-import { BASIC_SEPERATOR } from "../constant.js";
+import { BASIC_SEPARATOR } from "../constant.js";
 import Calculate from "./calculate.js";
 import Validate from "./validator.js";
 
 class Model {
   static input = "";
-  static seperator = "";
+  static separator = "";
 
   static run(input) {
     const { isCustom } = Validate.checkSeperatorType(input);
 
     if (isCustom) {
-      const { replacedInput, matchedSeperator } =
-        Validate.customSeperator(input);
+      const { replacedInput, matchedSeparator } =
+        Validate.customSeparator(input);
       this.input = replacedInput;
-      this.seperator = matchedSeperator;
+      this.separator = matchedSeparator;
     } else {
       this.input = input;
-      this.seperator = BASIC_SEPERATOR;
+      this.separator = BASIC_SEPARATOR;
     }
-    const output = Calculate.calculateNumber(this.input, this.seperator);
+    const output = Calculate.calculateNumber(this.input, this.separator);
     return output;
   }
 }
