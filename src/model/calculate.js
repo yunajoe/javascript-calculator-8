@@ -6,7 +6,6 @@ class Calculate {
     if (isNaN(num)) {
       throw new Error(ERROR_MESSAGES.INVALID_INTEGER);
     }
-
     if (num <= 0) {
       throw new Error(ERROR_MESSAGES.NEGATIVE_INTEGER);
     }
