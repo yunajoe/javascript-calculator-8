@@ -7,17 +7,16 @@ class Controller {
   }
 
   static isNegativeNmber(input) {
-    return Number(input) < 0;
+    return input < 0;
   }
 
   static isOnlyNumber(input) {
-    const num = Number(input);
-    if (!isNaN(num)) {
-      const isNegativeNumber = this.isNegativeNmber(num);
+    if (!isNaN(input)) {
+      const isNegativeNumber = this.isNegativeNmber(input);
       if (isNegativeNumber) {
         throw new Error(ERROR_MESSAGES.NEGATIVE_INTEGER);
       }
-      const isOverMaxNumber = this.isOverMaxNumber(num);
+      const isOverMaxNumber = this.isOverMaxNumber(input);
       if (isOverMaxNumber) {
         throw new Error(ERROR_MESSAGES.MAX_INTEGER);
       }
@@ -28,13 +27,13 @@ class Controller {
 
   static isOverMaxNumber(input) {
     const limitNum = Number.MAX_SAFE_INTEGER; // 9007199254740991
-    return Number(input) > limitNum;
+    return input > limitNum;
   }
 
   static run(input) {
     const trimmedInput = input.trim();
     const isEmptyString = this.isEmptyString(trimmedInput);
-    const isOnlyNumber = this.isOnlyNumber(trimmedInput);
+    const isOnlyNumber = this.isOnlyNumber(Number(trimmedInput));
 
     if (isEmptyString) {
       return 0;

@@ -1,4 +1,5 @@
 import { ERROR_MESSAGES } from "../constant.js";
+import Controller from "../controller/index.js";
 
 class Calculate {
   static calculateNumber(input, seperator) {
@@ -9,6 +10,7 @@ class Calculate {
       acc += num;
       return acc;
     }, 0);
+    Controller.isOnlyNumber(sum);
     return sum;
   }
 }

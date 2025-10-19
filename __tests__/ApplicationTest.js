@@ -95,12 +95,25 @@ describe("문자열 계산기", () => {
       }
     );
 
-    test.each(["-1,2,3", "1,2,-3", "1,-2,3"])(
+    test.each(["-1", "-2", "-3", "-1,2,3", "1,2,-3", "1,-2,3"])(
       "숫자 문자열이 음수인 경우",
       async (input) => {
         mockQuestions([input]);
         await expect(app.run()).rejects.toThrow(
           "[ERROR] 음수는 입력할 수 없습니다"
+        );
+      }
+    );
+    test.each([
+      "9007199254740992",
+      "9007199254740990,1,2",
+      "9007199254740990:1:2",
+    ])(
+      "숫자 문자열이 안전한 정수(9007199254740991)를 넘는 경우",
+      async (input) => {
+        mockQuestions([input]);
+        await expect(app.run()).rejects.toThrow(
+          "[ERROR] 범위를 넘어선 숫자입니다."
         );
       }
     );
