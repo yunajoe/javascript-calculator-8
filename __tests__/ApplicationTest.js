@@ -54,14 +54,13 @@ describe("문자열 계산기", () => {
       });
     });
 
-    test("커스텀 구분자 입력(하나의 숫자 문자열만 있는경우)", async () => {
-      const inputs = ["//;\\n1", "//:\\n1"];
-      mockQuestions(inputs);
-      const outputs = ["결과 : 1"];
+    test.each([
+      ["//;\\n1", "결과 : 1"],
+      ["//:\\n123", "결과 : 123"],
+    ])("커스텀 구분자 입력 테스트", async (input, output) => {
+      mockQuestions([input]);
       await app.run();
-      outputs.forEach((output) => {
-        expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
-      });
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
     });
   });
   describe("입력 예외 처리 테스트", () => {

@@ -8,6 +8,7 @@ class Validate {
   static customSeperator(input) {
     const matchedStr = input.match(CUSTOM_SEPARATOR)[0];
     const matchedSeperator = input.match(CUSTOM_SEPARATOR)[1];
+
     if (matchedSeperator.length < 1) {
       throw new Error(ERROR_MESSAGES.SEPERATOR_MINIMUM_LENGTH);
     }
@@ -17,9 +18,14 @@ class Validate {
     }
     const replacedInput = input.replace(matchedStr, "");
 
-    if (replacedInput.length > 1 && !replacedInput.includes(matchedSeperator)) {
+    if (Number(replacedInput)) {
+      return { replacedInput, matchedSeperator };
+    }
+
+    if (!replacedInput.includes(matchedSeperator)) {
       throw new Error(ERROR_MESSAGES.NOT_MATCHED_SEPERATOR);
     }
+
     return { replacedInput, matchedSeperator };
   }
 

@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from "../constant.js";
 import Model from "../Model/index.js";
 
 class Controller {
@@ -16,10 +17,15 @@ class Controller {
 
   static run(input) {
     const trimmedInput = input.trim();
+
+    // 빈문자열 확인
     const isEmptyString = this.isEmptyString(trimmedInput);
     if (isEmptyString) {
       return 0;
     }
+
+    if (Number(input)) throw new Error(ERROR_MESSAGES.NOT_USED_SEPERATOR);
+
     return Model.run(trimmedInput);
   }
 }
