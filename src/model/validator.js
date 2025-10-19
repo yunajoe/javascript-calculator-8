@@ -29,7 +29,7 @@ class Validate {
     return { replacedInput, matchedSeperator };
   }
 
-  static checkValidInput(input) {
+  static checkSeperatorType(input) {
     const isBasic = BASIC_SEPERATOR.test(input);
     const isCustom = CUSTOM_SEPARATOR.test(input);
     if (!isBasic && !isCustom) {
